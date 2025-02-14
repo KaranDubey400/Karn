@@ -35,15 +35,19 @@
             animation: bounce 0.5s ease;
         }
 
-        /* Bottom-right signature styling */
+        /* Style for "with 💖 Karn" inside the container */
         .signature {
-            position: fixed;
+            position: absolute;
             bottom: 10px;
             right: 20px;
-            font-size: 28px;  /* Same size as the header */
+            font-size: 24px; /* Same size as the header */
             font-family: "Sacramento", cursive; /* Same font */
-            color: #ff4081; /* Romantic pinkish color */
-            text-align: right;
+            color: #ff4081; /* Romantic pink color */
+        }
+
+        .container {
+            position: relative; /* Makes sure child elements (like .signature) stay inside */
+            padding-bottom: 50px; /* Extra space at the bottom to fit the signature */
         }
     </style>
 </head>
@@ -59,78 +63,12 @@
             <button class="btn" id="yesButton" onclick="goToYesPage()">Yes!</button>
             <button class="btn" id="noButton" onmouseover="evadeButton()" onclick="evadeButton()">No</button>
         </div>
+
+        <!-- Signature inside the container -->
+        <h1 class="header_text signature">with 💖 Karn</h1>
     </div>
 
-    <!-- Random GIF container (initially hidden) -->
-    <img id="randomGif"
-        style="opacity: 0.8; display: none; position: fixed; top: 20%; left: 84%; transform: translate(-50%, -50%); max-width: 300px; border: 2px solid #fff; border-radius: 10px; z-index: 1000;"
-        alt="Random Gif" />
-
-    <!-- Signature text at the bottom-right -->
-    <h1 class="header_text signature">with 💖 Karn</h1>
-
     <script>
-        // Prevent overlapping GIFs
-        let gifActive = false;
-
-        // Array of GIF URLs – replace these with your actual GIF URLs
-        const gifUrls = [
-            "assets/gifs/AngryBugcatStickerByCapoo.gif",
-            "assets/gifs/BugcatWhatStickerByCapoo.gif",
-            "assets/gifs/CatNoStickerByCapoo.gif",
-            "assets/gifs/FreezingColdStickerByCapoo.gif",
-            "assets/gifs/SadBugcatStickerByCapoo.gif",
-            "assets/gifs/SadCryGIFByCapoo.gif"
-        ];
-
-        // Function to move the "No" button and show a random GIF
-        function evadeButton() {
-            const noBtn = document.getElementById("noButton");
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
-            const maxX = window.innerWidth - btnWidth;
-
-            // Avoid the top region where the GIF is displayed (e.g., top 25% of the screen)
-            const minY = window.innerHeight * 0.3;
-            const maxY = window.innerHeight - btnHeight;
-
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * (maxY - minY) + minY;
-
-            noBtn.style.position = "absolute";
-            noBtn.style.left = randomX + "px";
-            noBtn.style.top = randomY + "px";
-
-            // Check if a GIF is already active; if so, exit.
-            const gifDisplay = document.getElementById("randomGif");
-            if (gifActive) {
-                return;
-            }
-            gifActive = true;
-
-            // Pick and display a random GIF
-            const randomIndex = Math.floor(Math.random() * gifUrls.length);
-            const selectedGif = gifUrls[randomIndex];
-            gifDisplay.src = selectedGif;
-            gifDisplay.style.display = "block";
-            gifDisplay.style.opacity = 0;
-            gifDisplay.style.transition = "opacity 0.5s";
-
-            // Fade in the GIF
-            setTimeout(() => {
-                gifDisplay.style.opacity = 1;
-            }, 50);
-
-            // Keep the GIF visible for 5 seconds, then fade it out smoothly
-            setTimeout(() => {
-                gifDisplay.style.opacity = 0;
-                setTimeout(() => {
-                    gifDisplay.style.display = "none";
-                    gifActive = false;
-                }, 500); // Wait for fade-out to complete (500ms)
-            }, 5000);
-        }
-
         // Function to animate the Yes button and navigate to the next page
         function goToYesPage() {
             const yesBtn = document.getElementById("yesButton");
