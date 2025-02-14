@@ -14,32 +14,18 @@
     <style>
         /* Bounce animation for the Yes button */
         @keyframes bounce {
-            0% {
-                transform: scale(1);
-            }
-
-            30% {
-                transform: scale(1.2);
-            }
-
-            50% {
-                transform: scale(0.9);
-            }
-
-            70% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            30% { transform: scale(1.2); }
+            50% { transform: scale(0.9); }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .btn.clicked {
             animation: bounce 0.5s ease;
         }
 
-        /* Style to position "with 💖 Karn" at bottom-right inside the container */
+        /* Keep "with 💖 Karn" inside container at bottom-right */
         .signature {
             position: absolute;
             bottom: 10px;
@@ -51,8 +37,13 @@
 
         /* Ensure the container is positioned properly */
         .container {
-            position: relative; /* Needed for absolute positioning of signature */
-            padding-bottom: 40px; /* Prevents overlap with signature */
+            position: relative; /* Allows elements inside to use absolute positioning */
+            padding-bottom: 50px; /* Prevents overlap with signature */
+        }
+
+        /* Allow No button to move freely */
+        #noButton {
+            position: absolute;
         }
     </style>
 </head>
@@ -67,7 +58,7 @@
             <button class="btn" id="yesButton" onclick="goToYesPage()">Yes!</button>
             <button class="btn" id="noButton" onmouseover="evadeButton()" onclick="evadeButton()">No</button>
         </div>
-        <!-- Added "with 💖 Karn" inside the container at bottom-right -->
+        <!-- Corrected: "with 💖 Karn" positioned at bottom-right inside container -->
         <h1 class="header_text signature">with 💖 Karn</h1>
     </div>
 
@@ -96,45 +87,34 @@
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
             const maxX = window.innerWidth - btnWidth;
-
-            // Avoid the top region where the GIF is displayed (e.g., top 25% of the screen)
             const minY = window.innerHeight * 0.3;
             const maxY = window.innerHeight - btnHeight;
 
             const randomX = Math.random() * maxX;
             const randomY = Math.random() * (maxY - minY) + minY;
 
-            noBtn.style.position = "absolute";
             noBtn.style.left = randomX + "px";
             noBtn.style.top = randomY + "px";
 
             // Check if a GIF is already active; if so, exit.
             const gifDisplay = document.getElementById("randomGif");
-            if (gifActive) {
-                return;
-            }
+            if (gifActive) return;
             gifActive = true;
 
             // Pick and display a random GIF
             const randomIndex = Math.floor(Math.random() * gifUrls.length);
-            const selectedGif = gifUrls[randomIndex];
-            gifDisplay.src = selectedGif;
+            gifDisplay.src = gifUrls[randomIndex];
             gifDisplay.style.display = "block";
             gifDisplay.style.opacity = 0;
             gifDisplay.style.transition = "opacity 0.5s";
 
-            // Fade in the GIF
-            setTimeout(() => {
-                gifDisplay.style.opacity = 1;
-            }, 50);
-
-            // Keep the GIF visible for 5 seconds, then fade it out smoothly
+            setTimeout(() => { gifDisplay.style.opacity = 1; }, 50);
             setTimeout(() => {
                 gifDisplay.style.opacity = 0;
                 setTimeout(() => {
                     gifDisplay.style.display = "none";
                     gifActive = false;
-                }, 500); // Wait for fade-out to complete (500ms)
+                }, 500);
             }, 5000);
         }
 
@@ -144,16 +124,10 @@
             yesBtn.classList.add("clicked");
 
             // Trigger confetti explosion
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 
             // Wait for the animation and confetti effect before redirecting
-            setTimeout(() => {
-                window.location.href = "yes.html";
-            }, 1400);
+            setTimeout(() => { window.location.href = "yes.html"; }, 1400);
         }
     </script>
 
