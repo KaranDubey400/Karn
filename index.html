@@ -38,6 +38,14 @@
         .btn.clicked {
             animation: bounce 0.5s ease;
         }
+
+        /* Style for the signature */
+        .signature {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 
@@ -52,6 +60,9 @@
             <button class="btn" id="yesButton" onclick="goToYesPage()">Yes!</button>
             <button class="btn" id="noButton" onmouseover="evadeButton()" onclick="evadeButton()">No</button>
         </div>
+
+        <!-- Signature at bottom right -->
+        <h1 class="header_text signature">With 💖 Karn</h1>
     </div>
 
     <!-- Random GIF container (initially hidden) -->
@@ -140,30 +151,25 @@
         }
     </script>
 
+    <script>
+        // Create an audio element and store it globally
+        let audio = new Audio("assets/audio/love.mp3");
+        audio.loop = true; // Ensure looping
 
+        // Function to play music
+        function playMusic() {
+            if (!localStorage.getItem("musicPlaying")) {
+                audio.play().then(() => {
+                    localStorage.setItem("musicPlaying", "true");
+                }).catch(err => console.log("Autoplay blocked", err));
+            }
+        }
 
-<script>
-    // Create an audio element and store it globally
-    let audio = new Audio("assets/audio/love.mp3");
-    audio.loop = true; // Ensure looping
-  
-    // Function to play music
-    function playMusic() {
-      if (!localStorage.getItem("musicPlaying")) {
-        audio.play().then(() => {
-          localStorage.setItem("musicPlaying", "true");
-        }).catch(err => console.log("Autoplay blocked", err));
-      }
-    }
-  
-    // Play music when the user interacts
-    document.addEventListener("click", playMusic);
-    document.addEventListener("DOMContentLoaded", playMusic);
-  </script>
-  
+        // Play music when the user interacts
+        document.addEventListener("click", playMusic);
+        document.addEventListener("DOMContentLoaded", playMusic);
+    </script>
+
 </body>
 
 </html>
-
-
-
