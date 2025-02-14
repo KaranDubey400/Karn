@@ -38,21 +38,37 @@
         .btn.clicked {
             animation: bounce 0.5s ease;
         }
+
+        /* Style to position "with 💖 Karn" at bottom-right inside the container */
+        .signature {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 18px;
+            font-family: "Sacramento", cursive;
+            color: #ff4081; /* Romantic pink color */
+        }
+
+        /* Ensure the container is positioned properly */
+        .container {
+            position: relative; /* Needed for absolute positioning of signature */
+            padding-bottom: 40px; /* Prevents overlap with signature */
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <h1 class="header_text">Will You Be My Valentine?</h1>
-        <h1 class="header_text">with 💖 Karn</h1>  <!-- New line added here -->
         <div class="image_container">
-            <!-- Replace with your selected romantic photo -->
             <img src="assets/images/romantic-photo.jpg" alt="Romantic Background">
         </div>
         <div class="buttons">
             <button class="btn" id="yesButton" onclick="goToYesPage()">Yes!</button>
             <button class="btn" id="noButton" onmouseover="evadeButton()" onclick="evadeButton()">No</button>
         </div>
+        <!-- Added "with 💖 Karn" inside the container at bottom-right -->
+        <h1 class="header_text signature">with 💖 Karn</h1>
     </div>
 
     <!-- Random GIF container (initially hidden) -->
